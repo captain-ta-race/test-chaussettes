@@ -2,11 +2,8 @@
 const rssFeedUrl = "https://corsproxy.io/?https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16"; // Utilise ton flux réel ici
 const episodesContainer = document.getElementById("episodes");
 
-// Taille maximale pour le préchargement (3 Mo en octets)
-const MAX_PRELOAD_SIZE = 3 * 1024 * 1024;
-
-// Fonction pour récupérer et afficher les épisodes
-async function loadPodcastEpisodes() {
+// Fonction principale pour charger le flux RSS
+async function loadPodcast() {
     try {
         const response = await fetch(rssFeedUrl);
         if (!response.ok) throw new Error("Erreur lors de la récupération du flux RSS.");
@@ -15,32 +12,22 @@ async function loadPodcastEpisodes() {
         const parser = new DOMParser();
         const rssXml = parser.parseFromString(rssText, "application/xml");
 
+        // Charger les informations générales du podcast
+        const podcastTitle = rssXml.querySelector("channel > title").textContent;
+        const podcastDescription = rssXml.querySelector("channel > description").textContent;
+        const podcastImage = rssXml.querySelector("channel > image > url")?.textContent || '';
+
+        displayPodcastInfo(podcastTitle, podcastDescription, podcastImage);
+
+        // Charger les épisodes
         const items = rssXml.querySelectorAll("item");
-        items.forEach(async (item) => {
+        items.forEach((item) => {
             const title = item.querySelector("title").textContent;
             const audioUrl = item.querySelector("enclosure")?.getAttribute("url");
-
+            const description = item.querySelector("description")?.textContent || "Aucune description disponible.";
+            
             if (audioUrl) {
-                // Créer l'élément visuel pour l'épisode
-                const episodeDiv = document.createElement("div");
-                episodeDiv.classList.add("episode");
-
-                const titleElement = document.createElement("div");
-                titleElement.textContent = title;
-                titleElement.classList.add("episode-title");
-
-                // Ajout du lecteur audio avec contrôle du préchargement
-                const audioElement = document.createElement("audio");
-                audioElement.controls = true;
-
-                // Charger seulement 3 Mo via une requête HTTP partielle
-                const blobUrl = await fetchPartialAudio(audioUrl, MAX_PRELOAD_SIZE);
-                audioElement.src = blobUrl;
-
-                // Ajout au DOM
-                episodeDiv.appendChild(titleElement);
-                episodeDiv.appendChild(audioElement);
-                episodesContainer.appendChild(episodeDiv);
+                displayEpisode(title, audioUrl, description);
             }
         });
     } catch (error) {
@@ -48,19 +35,52 @@ async function loadPodcastEpisodes() {
     }
 }
 
-// Fonction pour précharger seulement une partie de l'audio
-async function fetchPartialAudio(url, maxBytes) {
-    const response = await fetch(url, {
-        headers: {
-            Range: `bytes=0-${maxBytes - 1}`, // Limite la requête aux premiers maxBytes octets
-        },
-    });
+// Fonction pour afficher les informations générales du podcast
+function displayPodcastInfo(title, description, imageUrl) {
+    const header = document.querySelector(".header .container");
 
-    if (!response.ok) throw new Error("Erreur lors du préchargement de l'audio.");
+    // Ajouter l'image du podcast
+    if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = title;
+        img.classList.add("podcast-image");
+        header.prepend(img);
+    }
 
-    const blob = await response.blob();
-    return URL.createObjectURL(blob); // Crée un URL Blob pour le lecteur audio
+    // Ajouter la description du podcast
+    const subtitle = document.createElement("p");
+    subtitle.textContent = description;
+    subtitle.classList.add("subtitle");
+    header.appendChild(subtitle);
 }
 
-// Charger les épisodes au démarrage
-loadPodcastEpisodes();
+// Fonction pour afficher un épisode
+function displayEpisode(title, audioUrl, description) {
+    const episodeDiv = document.createElement("div");
+    episodeDiv.classList.add("episode");
+
+    // Titre de l'épisode
+    const titleElement = document.createElement("div");
+    titleElement.textContent = title;
+    titleElement.classList.add("episode-title");
+
+    // Description de l'épisode
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = description;
+    descriptionElement.classList.add("episode-description");
+
+    // Player audio
+    const audioElement = document.createElement("audio");
+    audioElement.controls = true;
+    audioElement.src = audioUrl;
+
+    // Ajouter les éléments au conteneur de l'épisode
+    episodeDiv.appendChild(titleElement);
+    episodeDiv.appendChild(descriptionElement);
+    episodeDiv.appendChild(audioElement);
+    episodesContainer.appendChild(episodeDiv);
+}
+
+// Charger les données au chargement de la page
+loadPodcast();
