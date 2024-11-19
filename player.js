@@ -101,3 +101,45 @@ function cleanText(html) {
 
 // Charger les données au chargement de la page
 loadPodcast();
+
+function displayEpisode(title, audioUrl, description, imageUrl) {
+    const episodeDiv = document.createElement("div");
+    episodeDiv.classList.add("episode");
+
+    // Miniature de l'épisode
+    if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = title;
+        img.classList.add("episode-image");
+        episodeDiv.appendChild(img);
+    }
+
+    // Conteneur pour le texte et le player
+    const contentDiv = document.createElement("div");
+    contentDiv.classList.add("episode-content");
+
+    // Titre de l'épisode
+    const titleElement = document.createElement("div");
+    titleElement.textContent = title;
+    titleElement.classList.add("episode-title");
+
+    // Description de l'épisode
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = description;
+    descriptionElement.classList.add("episode-description");
+
+    // Player audio
+    const audioElement = document.createElement("audio");
+    audioElement.controls = true;
+    audioElement.src = audioUrl;
+
+    // Ajouter les éléments au conteneur de contenu
+    contentDiv.appendChild(titleElement);
+    contentDiv.appendChild(descriptionElement);
+    contentDiv.appendChild(audioElement);
+
+    // Ajouter la miniature et le contenu à l'épisode
+    episodeDiv.appendChild(contentDiv);
+    episodesContainer.appendChild(episodeDiv);
+}
