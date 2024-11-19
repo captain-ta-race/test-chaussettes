@@ -1,5 +1,18 @@
 // Lien vers le flux RSS
-const rssFeedUrl = "https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16.rss";
+const rssFeedUrl = "https://corsproxy.io/?https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16.rss";
+
+// Récupérer et traiter le flux RSS
+async function loadPodcastEpisodes() {
+    try {
+        const response = await fetch(rssFeedUrl);
+        if (!response.ok) throw new Error("Erreur lors de la récupération du flux RSS.");
+        
+        const rssText = await response.text();
+        // Suite du traitement (parser XML)...
+    } catch (error) {
+        console.error("Erreur :", error.message);
+    }
+}
 
 // Récupération des éléments HTML
 const episodesContainer = document.getElementById("episodes");
