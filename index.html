@@ -3,29 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Podcast Player</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .episode {
-            margin-bottom: 15px;
-        }
-        .episode-title {
-            font-weight: bold;
-            cursor: pointer;
-        }
-        audio {
-            width: 100%;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Podcast - Micro-Chaussettes</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Podcast Player</h1>
-    <p>Récupération des épisodes à partir du flux RSS...</p>
-    <div id="episodes"></div>
+    <header class="header">
+        <div class="container">
+            <h1 class="title">🎙️ Micro-Chaussettes Podcast</h1>
+            <p class="subtitle">Découvrez les meilleurs épisodes directement ici.</p>
+        </div>
+    </header>
+    
+    <main class="main">
+        <div class="container" id="episodes">
+            <p>Chargement des épisodes...</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>📡 Propulsé par votre flux RSS. Design inspiré par Acast.</p>
+        </div>
+    </footer>
 
     <script src="player.js"></script>
 </body>
