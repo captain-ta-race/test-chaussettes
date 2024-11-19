@@ -17,7 +17,7 @@ async function loadPodcast() {
         const podcastDescription = rssXml.querySelector("channel > description").textContent;
         const podcastImage = rssXml.querySelector("channel > image > url")?.textContent || '';
 
-        displayPodcastInfo(podcastTitle, podcastDescription, podcastImage);
+        displayPodcastInfo(podcastTitle, cleanText(podcastDescription), podcastImage);
 
         // Charger les épisodes
         const items = rssXml.querySelectorAll("item");
@@ -25,9 +25,10 @@ async function loadPodcast() {
             const title = item.querySelector("title").textContent;
             const audioUrl = item.querySelector("enclosure")?.getAttribute("url");
             const description = item.querySelector("description")?.textContent || "Aucune description disponible.";
-            
+            const episodeImage = item.querySelector("itunes\\:image")?.getAttribute("href") || podcastImage;
+
             if (audioUrl) {
-                displayEpisode(title, audioUrl, description);
+                displayEpisode(title, audioUrl, cleanText(description), episodeImage);
             }
         });
     } catch (error) {
@@ -56,9 +57,18 @@ function displayPodcastInfo(title, description, imageUrl) {
 }
 
 // Fonction pour afficher un épisode
-function displayEpisode(title, audioUrl, description) {
+function displayEpisode(title, audioUrl, description, imageUrl) {
     const episodeDiv = document.createElement("div");
     episodeDiv.classList.add("episode");
+
+    // Miniature de l'épisode
+    if (imageUrl) {
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.alt = title;
+        img.classList.add("episode-image");
+        episodeDiv.appendChild(img);
+    }
 
     // Titre de l'épisode
     const titleElement = document.createElement("div");
@@ -80,6 +90,13 @@ function displayEpisode(title, audioUrl, description) {
     episodeDiv.appendChild(descriptionElement);
     episodeDiv.appendChild(audioElement);
     episodesContainer.appendChild(episodeDiv);
+}
+
+// Fonction pour nettoyer le texte HTML et récupérer du texte brut
+function cleanText(html) {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
 }
 
 // Charger les données au chargement de la page
