@@ -1,0 +1,77 @@
+/* --- Réinitialisation simple --- */
+body, h1, h2, p, div, footer, header {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+}
+
+/* --- En-tête --- */
+.header {
+    background-color: #1e1e2c;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+.header .title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+.header .subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* --- Section principale --- */
+.main {
+    padding: 20px 15px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.episode {
+    background: #ffffff;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.episode:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.episode-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: #1e1e2c;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+.episode-title:hover {
+    color: #ff6600;
+}
+audio {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* --- Pied de page --- */
+.footer {
+    background-color: #1e1e2c;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
