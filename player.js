@@ -86,6 +86,10 @@ function displayEpisode(title, audioUrl, description, imageUrl) {
     audioElement.controls = true;
     audioElement.src = audioUrl;
 
+ // Charger seulement 3 Mo via une requête HTTP partielle
+    const blobUrl = await fetchPartialAudio(audioUrl, MAX_PRELOAD_SIZE);
+    audioElement.src = blobUrl;
+
     // Ajouter les éléments au conteneur de l'épisode
     episodeDiv.appendChild(titleElement);
     episodeDiv.appendChild(descriptionElement);
