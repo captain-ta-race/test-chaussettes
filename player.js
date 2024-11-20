@@ -1,6 +1,7 @@
 // Lien vers le flux RSS
 const rssFeedUrl = "https://corsproxy.io/?https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16"; // Utilise ton flux réel ici
 const episodesContainer = document.getElementById("episodes");
+const MAX_PRELOAD_SIZE = 3 * 1024 * 1024;
 
 // Fonction principale pour charger le flux RSS
 async function loadPodcast() {
