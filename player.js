@@ -1,5 +1,5 @@
 // Lien vers le flux RSS
-const rssFeedUrl = "https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16"; // Utilise ton flux réel ici
+const rssFeedUrl = "https://corsproxy.io/?https://feeds.acast.com/public/shows/6728ae32dc854c9577f0ce16"; // Utilise ton flux réel ici
 const episodesContainer = document.getElementById("episodes");
 
 // Fonction principale pour charger le flux RSS
