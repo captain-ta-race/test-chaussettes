@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Micro-Chaussettes",
+        "rss": "https://feeds.acast.com/public/shows/micro-chaussettes",
+        "image": "https://example.com/image-micro-chaussettes.jpg",
+        "description": "Un podcast qui met à l'honneur les chaussettes et leurs histoires incroyables."
+    },
+    {
+        "title": "Tech Talks",
+        "rss": "https://feeds.example.com/techtalks",
+        "image": "https://example.com/image-tech-talks.jpg",
+        "description": "Des discussions passionnantes autour des dernières avancées technologiques."
+    },
+    {
+        "title": "Les Aventuriers",
+        "rss": "https://feeds.example.com/aventuriers",
+        "image": "https://example.com/image-aventuriers.jpg",
+        "description": "Des récits inspirants d'aventuriers modernes."
+    }
+]
