@@ -85,6 +85,16 @@ audio {
     display: block;
 }
 
+/* --- Image du podcast dans les pages podcast --- */
+.podcast-image-large {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 8px;
+}
+
 /* --- Miniature de l'épisode --- */
 .episode {
     display: flex;
