@@ -16,12 +16,12 @@ async function loadPodcasts() {
             podcastCard.classList.add("podcast-card");
 
             podcastCard.innerHTML = `
-                <img src="${podcast.image}" alt="Image du podcast ${podcast.title}" class="podcast-image">
-                <div class="podcast-info">
-                    <h2 class="podcast-title">${podcast.title}</h2>
-                    <p class="podcast-description">${podcast.description}</p>
-                    <a href="podcast.html?rss=${encodeURIComponent(podcast.rss)}" class="podcast-link">Découvrir</a>
-                </div>
+    <img src="${podcast.image}" alt="Image du podcast ${podcast.title}" class="podcast-image">
+    <div class="podcast-info">
+        <h2 class="podcast-title">${podcast.title}</h2>
+        <p class="podcast-description">${podcast.description}</p>
+        <a href="podcast.html?title=${encodeURIComponent(podcast.title)}" class="podcast-link">Découvrir</a>
+    </div>
             `;
 
             podcastsListElement.appendChild(podcastCard);
