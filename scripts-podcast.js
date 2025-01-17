@@ -88,3 +88,26 @@ async function prefetchAudio(url) {
 
 // Charger les épisodes au chargement de la page
 loadPodcastEpisodes();
+
+async function loadPodcastEpisodes() {
+    try {
+        console.log("Fetching podcasts.json...");
+        const response = await fetch("podcasts.json");
+        if (!response.ok) throw new Error("Failed to load podcasts.json.");
+
+        const podcasts = await response.json();
+        const podcast = podcasts.find(p => p.title.toLowerCase() === podcastTitle.toLowerCase());
+        if (!podcast) throw new Error("Podcast not found.");
+
+        console.log("Fetching RSS feed:", podcast.rss);
+        const feedResponse = await fetch(podcast.rss);
+        if (!feedResponse.ok) throw new Error(`Failed to fetch RSS feed: ${feedResponse.statusText}`);
+
+        const feedText = await feedResponse.text();
+        console.log("RSS feed loaded successfully.");
+        // Parse and display episodes...
+    } catch (error) {
+        console.error("Error:", error.message);
+        episodesContainer.innerHTML = `<p>Error: ${error.message}</p>`;
+    }
+}
